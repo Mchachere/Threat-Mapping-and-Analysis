@@ -274,7 +274,7 @@ def process_packet(packet_data):
 
         packet_payload = get_packet_payload(ip)
         payload_decoded = detect_encoding(packet_payload)
-        
+
         if not packet_payload:
             return None
 
@@ -297,9 +297,9 @@ def process_packet(packet_data):
             kml_point += generate_kml_for_ips(dst_coordinates, src_coordinates, dst, malicious=True,
                                               virus_name=virus_info.virus_name, virus_type=virus_info.virus_type,
                                               virus_family=virus_info.virus_family)
-        elif check_url_domains(payload_decoded, dst, dst_coordinates, src_coordinates):
-            kml_point += generate_kml_for_ips(dst_coordinates, src_coordinates, dst, malicious=True,
-                                              virus_name=None, virus_type=None, virus_family=None)
+            if check_url_domains(payload_decoded, dst, dst_coordinates, src_coordinates):
+                kml_point += generate_kml_for_ips(dst_coordinates, src_coordinates, dst, malicious=True,
+                                                  virus_name=None, virus_type=None, virus_family=None)
         elif dst in suspicious_ips or src in malicious_ips or is_suspicious_ip(src) == 'malicious':
             kml_point += generate_kml_for_ips(dst_coordinates, src_coordinates, dst, suspicious=True)
         else:
